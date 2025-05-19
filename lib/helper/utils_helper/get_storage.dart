@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:get_storage/get_storage.dart';
+import 'package:interview_task/models/userModel.dart';
 
 class SharedPreferenceHelper {
 
@@ -93,23 +94,23 @@ class SharedPreferenceHelper {
     _savePref(_userName, name);
   }
 
-  // UserModel? getUserModel() {
-  //   String? user = _getPref(_userModel);
-  //   if (user != null) {
-  //     Map<String, dynamic>  userMap = _decoder.convert(user);
-  //     return UserModel.fromJson(userMap);
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  // void saveUserModel(UserModel? userModel) {
-  //   if (userModel != null) {
-  //     String value = _encoder.convert(userModel);
-  //     _savePref(_userModel, value);
-  //   } else {
-  //     _savePref(_userModel, null);
-  //   }
-  // }
+  UserModel? getUserModel() {
+    String? user = _getPref(_userModel);
+    if (user != null) {
+      Map<String, dynamic>  userMap = _decoder.convert(user);
+      return UserModel.fromJson(userMap);
+    } else {
+      return null;
+    }
+  }
+  void saveUserModel(UserModel? userModel) {
+    if (userModel != null) {
+      String value = _encoder.convert(userModel);
+      _savePref(_userModel, value);
+    } else {
+      _savePref(_userModel, null);
+    }
+  }
 
   bool getIsLoggedIn(){
     return _getPref(_isLoggedIn) ?? false;

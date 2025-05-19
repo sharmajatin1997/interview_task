@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:interview_task/routes/app_pages.dart';
 
 class AuthService extends GetxService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,23 +12,36 @@ class AuthService extends GetxService {
     super.onInit();
   }
 
-  Future<void> register(String email, String password) async {
+  Future<UserCredential?> register(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      var res=await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      if(res.user!=null){
+        return res;
+      }else{
+        return null;
+      }
     } catch (e) {
       Get.snackbar('Register Error', e.toString());
+      return null;
     }
   }
 
-  Future<void> login(String email, String password) async {
+  Future<UserCredential?> login(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      var res=await _auth.signInWithEmailAndPassword(email: email, password: password);
+      if(res.user!=null){
+        return res;
+      }else{
+        return null;
+      }
     } catch (e) {
       Get.snackbar('Login Error', e.toString());
+      return null;
     }
   }
 
   Future<void> logout() async {
     await _auth.signOut();
+    Get.toNamed(Routes.login);
   }
 }

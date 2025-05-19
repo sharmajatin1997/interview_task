@@ -48,7 +48,7 @@ class AppText extends StatelessWidget {
       maxLines: maxlines,
       overflow: maxlines != null ? TextOverflow.ellipsis : null,
       textAlign: textAlign,
-      style: getStyle(color ?? Colors.black, textSize ?? getTextSize(width)),
+      style: getStyle(color ?? Colors.white, textSize ?? getTextSize(width)),
     );
   }
 
@@ -64,7 +64,7 @@ class AppText extends StatelessWidget {
         fontSize: textSize,
         fontStyle: fontStyle ?? FontStyle.normal,
         height: lineHeight ?? 1.0,
-        decorationColor: underlineColor ?? Colors.black,
+        decorationColor: underlineColor ?? Colors.white,
         decorationThickness: 1,
         decoration: strikeThrough != null && strikeThrough!
             ? TextDecoration.lineThrough

@@ -7,6 +7,12 @@ class CaseValidator {
     final RegExp passwordRegExp = RegExp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$');
 
     switch (validationType) {
+      case "name":
+        {
+          if (value.isEmpty) {
+            return "Please enter your name";
+          }
+        }
       case "email":
         {
           if (value.isEmpty) {

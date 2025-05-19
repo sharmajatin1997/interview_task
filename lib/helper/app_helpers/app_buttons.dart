@@ -66,8 +66,8 @@ class AppButtons extends StatelessWidget {
                   begin: Alignment.centerRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    Color(0xff48C5DC),
-                    Color(0xff359AC0),
+                    Color(0xffe1873a),
+                    Color(0xffe1965b),
                   ],
                 ):null,
             boxShadow: boxShadow),
