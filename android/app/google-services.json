@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "277636088929",
+    "project_id": "interviewtask-afc36",
+    "storage_bucket": "interviewtask-afc36.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277636088929:android:f137ec98374f0626aa9620",
+        "android_client_info": {
+          "package_name": "com.task.interview_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAj2wa2JmkrliedB4FMWY4lBrWjp7PrtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
