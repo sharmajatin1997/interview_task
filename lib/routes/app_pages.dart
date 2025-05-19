@@ -5,6 +5,7 @@ import 'package:interview_task/modules/authentication/views/signup.dart';
 import 'package:interview_task/modules/authentication/views/splash_view.dart';
 import 'package:interview_task/modules/dashBoard/bindings/dashboard_bindings.dart';
 import 'package:interview_task/modules/dashBoard/views/home_view.dart';
+import 'package:interview_task/modules/dashBoard/views/profile_view.dart';
 
 
 part 'app_routes.dart';
@@ -36,6 +37,12 @@ class AppPages {
     GetPage(
         name: Routes.dashboard,
         page: () =>  HomeView(),
+        binding: DashboardBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: Routes.profileView,
+        page: () =>  ProfileView(),
         binding: DashboardBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),

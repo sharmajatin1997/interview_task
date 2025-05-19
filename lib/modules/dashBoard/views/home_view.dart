@@ -6,6 +6,7 @@ import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
+import 'package:interview_task/routes/app_pages.dart';
 
 class HomeView extends GetView<DashboardController> {
   const HomeView({super.key});
@@ -24,20 +25,25 @@ class HomeView extends GetView<DashboardController> {
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                crossAxisAlignment: CrossAxisAlignment.center,
                children: [
-                 Row(
-                   children: [
-                     Image.asset(
-                       Assets.assetsUser,
-                       height: 50,
-                       width: 50,
-                     ),
-                      Obx(
-                        ()=> AppText(
-                         text: controller.model.value?.name??'',
-                         textSize: 14.0,
-                         fontWeight: FontWeight.w500),
-                      ),
-                   ],
+                 GestureDetector(
+                   onTap: (){
+                     Get.toNamed(Routes.profileView);
+                   },
+                   child: Row(
+                     children: [
+                       Image.asset(
+                         Assets.assetsUser,
+                         height: 50,
+                         width: 50,
+                       ),
+                        Obx(
+                          ()=> AppText(
+                           text: controller.model.value?.name??'',
+                           textSize: 14.0,
+                           fontWeight: FontWeight.w500),
+                        ),
+                     ],
+                   ),
                  ),
                  GestureDetector(
                    onTap: (){
