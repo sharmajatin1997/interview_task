@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="gcm_defaultSenderId" translatable="false">277636088929</string>
-    <string name="google_api_key" translatable="false">AIzaSyDAj2wa2JmkrliedB4FMWY4lBrWjp7PrtM</string>
-    <string name="google_app_id" translatable="false">1:277636088929:android:f137ec98374f0626aa9620</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDAj2wa2JmkrliedB4FMWY4lBrWjp7PrtM</string>
-    <string name="google_storage_bucket" translatable="false">interviewtask-afc36.firebasestorage.app</string>
-    <string name="project_id" translatable="false">interviewtask-afc36</string>
-</resources>

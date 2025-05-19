@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/firebase_services/auth_service.dart';
 import 'package:interview_task/generated/assets.dart';
+import 'package:interview_task/helper/animations/staggered_list_animation.dart';
 import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
@@ -25,95 +26,105 @@ class ProfileView extends GetView<DashboardController> {
              mainAxisAlignment: MainAxisAlignment.start,
              crossAxisAlignment: CrossAxisAlignment.center,
              children: [
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 crossAxisAlignment: CrossAxisAlignment.center,
+               StaggeredListAnimation(
+                 initialDelay: 100,
+                 interval: 100,
                  children: [
-                   GestureDetector(
-                     onTap: (){
-                       Get.back();
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     crossAxisAlignment: CrossAxisAlignment.center,
+                     children: [
+                       GestureDetector(
+                         onTap: (){
+                           Get.back();
+                         },
+                           child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
+                       SizedBox(
+                         width: 10,
+                       ),
+                       AppText(
+                   text: 'Profile',
+                       textSize: 14.0,
+                       fontWeight: FontWeight.w500),
+                     ],
+                   ),
+                   SizedBox(
+                     height: 20,
+                   ),
+                   wrapChildren(children: [
+                     Center(
+                       child: Image.asset(
+                         Assets.assetsUser,
+                         height: 200,
+                         width: 200,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 30,
+                     ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: [
+                         AppText(
+                             text: 'Name',
+                             textSize: 14.0,
+                             fontWeight: FontWeight.w500),
+                         SizedBox(
+                           width: 10,
+                         ),
+                         AppText(
+                             text: controller.model.value?.name??'',
+                             textSize: 14.0,
+                             fontWeight: FontWeight.w500),
+                       ],
+                     ),
+                     SizedBox(
+                       height: 30,
+                     ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: [
+                         AppText(
+                             text: 'Email',
+                             textSize: 14.0,
+                             fontWeight: FontWeight.w500),
+                         SizedBox(
+                           width: 10,
+                         ),
+                         AppText(
+                             text: controller.model.value?.email??'',
+                             textSize: 14.0,
+                             fontWeight: FontWeight.w500),
+                       ],
+                     ),
+                   ]),
+                   SizedBox(
+                     height: 30,
+                   ),
+                   AppButtons(
+                     text: "Edit Profile",
+                     onTap: () async{
+                       var res=await Get.toNamed(Routes.editProfileView);
+                       if(res){
+                         controller.getData(SharedPreferenceHelper().getUserId()!);
+                       }
                      },
-                       child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
-                   SizedBox(
-                     width: 10,
+                     padding: const EdgeInsets.symmetric(vertical: 20),
+                     borderRadius: 10,
+                     margin: const EdgeInsets.only(top: 50,),
                    ),
-                   AppText(
-               text: 'Profile',
-                   textSize: 14.0,
-                   fontWeight: FontWeight.w500),
-                 ],
-               ),
-               SizedBox(
-                 height: 20,
-               ),
-               Image.asset(
-                 Assets.assetsUser,
-                 height: 200,
-                 width: 200,
-               ),
-               SizedBox(
-                 height: 30,
-               ),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 crossAxisAlignment: CrossAxisAlignment.center,
-                 children: [
-                   AppText(
-                       text: 'Name',
-                       textSize: 14.0,
-                       fontWeight: FontWeight.w500),
-                   SizedBox(
-                     width: 10,
+                   AppButtons(
+                     text: "Logout",
+                     onTap: () async{
+                       Get.find<AuthService>().logout();
+                     },
+                     padding: const EdgeInsets.symmetric(vertical: 20),
+                     borderRadius: 10,
+                     margin: const EdgeInsets.only(top: 20, bottom: 15),
                    ),
-                   AppText(
-                       text: controller.model.value?.name??'',
-                       textSize: 14.0,
-                       fontWeight: FontWeight.w500),
                  ],
-               ),
-               SizedBox(
-                 height: 30,
-               ),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 crossAxisAlignment: CrossAxisAlignment.center,
-                 children: [
-                   AppText(
-                       text: 'Email',
-                       textSize: 14.0,
-                       fontWeight: FontWeight.w500),
-                   SizedBox(
-                     width: 10,
-                   ),
-                   AppText(
-                       text: controller.model.value?.email??'',
-                       textSize: 14.0,
-                       fontWeight: FontWeight.w500),
-                 ],
-               ),
-               SizedBox(
-                 height: 30,
-               ),
-               AppButtons(
-                 text: "Edit Profile",
-                 onTap: () async{
-                   var res=await Get.toNamed(Routes.editProfileView);
-                   if(res){
-                     controller.getData(SharedPreferenceHelper().getUserId()!);
-                   }
-                 },
-                 padding: const EdgeInsets.symmetric(vertical: 20),
-                 borderRadius: 10,
-                 margin: const EdgeInsets.only(top: 50,),
-               ),
-               AppButtons(
-                 text: "Logout",
-                 onTap: () async{
-                   Get.find<AuthService>().logout();
-                 },
-                 padding: const EdgeInsets.symmetric(vertical: 20),
-                 borderRadius: 10,
-                 margin: const EdgeInsets.only(top: 20, bottom: 15),
                ),
              ],
            ),
@@ -122,7 +133,13 @@ class ProfileView extends GetView<DashboardController> {
      ),
    );
   }
-
+  Widget wrapChildren({required List<Widget> children}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    );
+  }
 }
 
 
