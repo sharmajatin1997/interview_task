@@ -7,4 +7,6 @@ abstract class Routes {
   static const login = "/LoginView";
   static const dashboard = "/dashboard";
   static const profileView = "/ProfileView";
+  static const editProfileView = "/EditProfileView";
+  static const eventView = "/eventView";
 }

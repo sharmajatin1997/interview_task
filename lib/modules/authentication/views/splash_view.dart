@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/generated/assets.dart';
+import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/authentication/views/login.dart';
+import 'package:interview_task/modules/dashBoard/views/home_view.dart';
 
 
 class SplashView extends StatefulWidget {
@@ -20,12 +22,12 @@ class _SplashViewState extends State<SplashView> {
       return Navigator.push(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>const LoginView(),
+          pageBuilder: (context, animation, secondaryAnimation) => SharedPreferenceHelper().getIsLoggedIn()?HomeView():LoginView(),
           transitionDuration: const Duration(milliseconds: 600),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return HolePageTransitionsBuilder().buildTransitions(
               MaterialPageRoute(
-                builder: (context) =>const LoginView(),
+                builder: (context) => SharedPreferenceHelper().getIsLoggedIn()?HomeView():LoginView(),
               ),
               context,
               animation,

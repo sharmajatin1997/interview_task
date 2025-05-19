@@ -62,6 +62,7 @@ class AuthController extends GetxController {
     if (res!=null) {
       isLoadingLogin.value = false;
       SharedPreferenceHelper().saveUserId(res.user!.uid);
+      SharedPreferenceHelper().saveIsLoggedIn(true);
       AppToasts.callToast(type: MessageType.success, context: context, message: 'Login successfully');
       Get.toNamed(Routes.dashboard);
       email.clear();

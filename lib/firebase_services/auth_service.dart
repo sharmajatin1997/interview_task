@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/routes/app_pages.dart';
 
 class AuthService extends GetxService {
@@ -42,6 +43,7 @@ class AuthService extends GetxService {
 
   Future<void> logout() async {
     await _auth.signOut();
+    SharedPreferenceHelper().clearAll();
     Get.toNamed(Routes.login);
   }
 }

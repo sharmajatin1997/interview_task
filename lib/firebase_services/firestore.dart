@@ -1,19 +1,23 @@
 
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/helper/utils/utils.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
+import 'package:interview_task/models/eventModel.dart';
 import 'package:interview_task/models/userModel.dart';
 
 class FirebaseFire extends GetxController {
   Rxn<UserModel> userModel = Rxn();
-
+  RxList<EventModel> eventList = RxList();
   @override
   void onInit() {
     super.onInit();
   }
 
   final databaseUserPath = FirebaseFirestore.instance.collection('users');
+  final databaseEventPath = FirebaseFirestore.instance.collection('events');
 
   void saveUser(UserModel model) async {
     if (await Utils.hasNetwork()) {
@@ -23,30 +27,14 @@ class FirebaseFire extends GetxController {
     }
   }
 
-  // void updateUserInfo(UserModel model, bool logout) async {
-  //   if (await Utils.hasNetwork()) {
-  //     isUpdate.value = true;
-  //     final userId = databaseUserPath.doc(model.uid);
-  //     Map<String, dynamic> user = model.toJson();
-  //     if (logout) {
-  //       user['deviceToken'] = ' ';
-  //       await userId.update(user);
-  //       googleSignIn.signOut();
-  //       String fcm = SharedPreferenceHelper().getFcmToken()!;
-  //       SharedPreferenceHelper().clearAll();
-  //       SharedPreferenceHelper().saveFcm(true);
-  //       if (SharedPreferenceHelper().getFcm()) {
-  //         SharedPreferenceHelper().saveFcmToken(fcm);
-  //       }
-  //       Get.offAllNamed(Routes.login);
-  //     } else {
-  //       user['deviceToken'] = SharedPreferenceHelper().getFcmToken();
-  //       await userId.update(user);
-  //       getUserById(SharedPreferenceHelper().getUserId(), model);
-  //     }
-  //   }
-  // }
-  //
+  void updateUserInfo(Map<String, dynamic> model) async {
+    if (await Utils.hasNetwork()) {
+      final userId = databaseUserPath.doc(model["uid"]);
+      await userId.update(model);
+      Get.back(result: true);
+    }
+  }
+
 
   Future<UserModel?> getUserById(uid) async {
     if (await Utils.hasNetwork()) {
@@ -60,6 +48,39 @@ class FirebaseFire extends GetxController {
       }else{
         return UserModel();
       }
+    }else{
+      return UserModel();
+    }
+  }
+
+
+  void saveEvent(Map<String,dynamic> data) async {
+    if (await Utils.hasNetwork()) {
+      final eventId = databaseEventPath.doc(generateRandomString(15));
+      await eventId.set(data);
+      Get.back(result: true);
+    }
+  }
+
+  String generateRandomString(int length) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    final rand = Random.secure();
+    return List.generate(length, (index) => chars[rand.nextInt(chars.length)]).join();
+  }
+
+  Future<List<EventModel>?> getAllEvents() async {
+    if (await Utils.hasNetwork()) {
+      QuerySnapshot querySnapshot = await databaseEventPath.get();
+      final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      List<dynamic> list = allData;
+      eventList.clear();
+      for (var element in list) {
+        eventList.add(EventModel.fromJson(element as Map<String, dynamic>));
+      }
+      eventList.refresh();
+      return eventList;
+    }else{
+      return eventList;
     }
   }
 

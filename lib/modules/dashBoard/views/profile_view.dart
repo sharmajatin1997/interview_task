@@ -7,6 +7,7 @@ import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
+import 'package:interview_task/routes/app_pages.dart';
 
 class ProfileView extends GetView<DashboardController> {
   const ProfileView({super.key});
@@ -28,7 +29,11 @@ class ProfileView extends GetView<DashboardController> {
                  mainAxisAlignment: MainAxisAlignment.start,
                  crossAxisAlignment: CrossAxisAlignment.center,
                  children: [
-                   Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,),
+                   GestureDetector(
+                     onTap: (){
+                       Get.back();
+                     },
+                       child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
                    SizedBox(
                      width: 10,
                    ),
@@ -36,8 +41,6 @@ class ProfileView extends GetView<DashboardController> {
                text: 'Profile',
                    textSize: 14.0,
                    fontWeight: FontWeight.w500),
-
-
                  ],
                ),
                SizedBox(
@@ -93,13 +96,25 @@ class ProfileView extends GetView<DashboardController> {
                ),
                AppButtons(
                  text: "Edit Profile",
-                 onTap: () {
-
+                 onTap: () async{
+                   var res=await Get.toNamed(Routes.editProfileView);
+                   if(res){
+                     controller.getData(SharedPreferenceHelper().getUserId()!);
+                   }
                  },
                  padding: const EdgeInsets.symmetric(vertical: 20),
                  borderRadius: 10,
-                 margin: const EdgeInsets.only(top: 50, bottom: 15),
-               )
+                 margin: const EdgeInsets.only(top: 50,),
+               ),
+               AppButtons(
+                 text: "Logout",
+                 onTap: () async{
+                   Get.find<AuthService>().logout();
+                 },
+                 padding: const EdgeInsets.symmetric(vertical: 20),
+                 borderRadius: 10,
+                 margin: const EdgeInsets.only(top: 20, bottom: 15),
+               ),
              ],
            ),
          ),

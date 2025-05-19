@@ -200,6 +200,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_staggered_animations",
+      "rootUri": "file:///Users/jatinsharma/.pub-cache/hosted/pub.dev/flutter_staggered_animations-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/jatinsharma/Documents/flutter_3.29.2/packages/flutter_test",
       "packageUri": "lib/",
@@ -500,7 +506,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-19T14:26:27.078436Z",
+  "generated": "2025-05-19T18:15:20.063397Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/jatinsharma/Documents/flutter_3.29.2",
