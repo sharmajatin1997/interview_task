@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/firebase_options.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';

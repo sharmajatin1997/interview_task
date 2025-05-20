@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:interview_task/generated/assets.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/authentication/views/login.dart';
