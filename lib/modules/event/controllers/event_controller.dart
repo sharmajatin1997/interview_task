@@ -15,6 +15,8 @@ class EventController extends GetxController {
   TextEditingController time=TextEditingController();
   TextEditingController description=TextEditingController();
   DateTime? selectedDate;
+  var hour=''.obs;
+  var min=''.obs;
   TimeOfDay? selectedTime;
 
   Future<void> selectDate(BuildContext context) async {
@@ -39,6 +41,8 @@ class EventController extends GetxController {
 
     if (picked != null && picked != selectedTime) {
         selectedTime = picked;
+        hour.value=selectedTime!.hour.toString();
+        min.value=selectedTime!.minute.toString();
         time.text=formatTime(selectedTime!);
     }
   }

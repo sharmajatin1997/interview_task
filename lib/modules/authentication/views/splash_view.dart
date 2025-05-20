@@ -49,11 +49,10 @@ class _SplashViewState extends State<SplashView> {
         children: [
           Center(
             child: SizedBox(
-                height: context.height/2,
-                width: context.width,
+                height: 300,
+                width: 400,
                 child: Image.asset(
                   Assets.assetsSplash,
-                  fit: BoxFit.cover,
                 )),
           ),
 

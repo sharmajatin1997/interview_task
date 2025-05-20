@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:get_storage/get_storage.dart';
 import 'package:interview_task/models/userModel.dart';
 
@@ -45,8 +44,6 @@ class SharedPreferenceHelper {
       return prefs.write(key, value);
     } else if (value is String) {
       return prefs.write(key, value);
-    } else if (value is Double || value is Float) {
-      return prefs.write(key, value as double);
     }
   }
 

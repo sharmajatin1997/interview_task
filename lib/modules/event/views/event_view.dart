@@ -15,7 +15,6 @@ import 'package:interview_task/routes/app_pages.dart';
 
 class EventView extends GetView<EventController> {
   EventView({super.key});
-
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -42,7 +41,7 @@ class EventView extends GetView<EventController> {
                          children: [
                            GestureDetector(
                              onTap: (){
-                               Get.back();
+                               Get.back(result: true);
                              },
                                child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
                            SizedBox(
@@ -153,6 +152,8 @@ class EventView extends GetView<EventController> {
                                'name':controller.name.text,
                                'date':controller.date.text,
                                'time':controller.time.text,
+                               'hour':controller.hour.value,
+                               'min':controller.min.value,
                                'description':controller.description.text,
                              };
                              controller.firebase.saveEvent(data);
@@ -172,6 +173,7 @@ class EventView extends GetView<EventController> {
      ),
    );
   }
+
   Widget wrapChildren({required List<Widget> children}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

@@ -6,6 +6,7 @@ import 'package:interview_task/helper/animations/staggered_list_animation.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/app_helpers/image_view_chat.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/helper/shimmer/shimmer_box.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
@@ -40,13 +41,13 @@ class HomeView extends GetView<DashboardController> {
                        children: [
                          Image.asset(
                            Assets.assetsUser,
-                           height: 50,
-                           width: 50,
+                           height: Responsive.isMobile(context)?50:60,
+                           width:  Responsive.isMobile(context)?50:60,
                          ),
                          Obx(
                                ()=> AppText(
                                text: controller.model.value?.name??'',
-                               textSize: 14.0,
+                               textSize: MediaQuery.of(context).size.width * 0.03,
                                fontWeight: FontWeight.w500),
                          ),
                        ],
@@ -62,7 +63,7 @@ class HomeView extends GetView<DashboardController> {
                          horizontal: 20),
                      child: AppText(
                          text: 'Upcoming Events',
-                         textSize: 16.0,
+                         textSize: MediaQuery.of(context).size.width * 0.03,
                          fontWeight: FontWeight.w500),
                    ),
                  ]),
@@ -86,8 +87,7 @@ class HomeView extends GetView<DashboardController> {
                              )
                            ],
                          );
-                       }) :controller.eventList.isNotEmpty ? Expanded(
-                       child: ListView.separated(
+                       }) :controller.eventList.isNotEmpty ? ListView.separated(
                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                          shrinkWrap: true,
                          physics: const ClampingScrollPhysics(),
@@ -101,7 +101,7 @@ class HomeView extends GetView<DashboardController> {
                                child: FadeInAnimation(
                                  child: InkWell(
                                    onTap: () {
-                                 
+                                      Get.toNamed(Routes.eventDetailView,arguments:controller.eventList[index].toJson());
                                    },
                                    child: Container(
                                      decoration: BoxDecoration(
@@ -146,30 +146,33 @@ class HomeView extends GetView<DashboardController> {
                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                    crossAxisAlignment: CrossAxisAlignment.center,
                                                    children: [
-                                                     Text(
-                                                       controller.eventList[index].name ??
-                                                           "",
-                                                       style: TextStyle(
-                                                           color: Colors.white,
-                                                           fontSize: 16),
+                                                     Flexible(
+                                                       child: Text(
+                                                         controller.eventList[index].name ??
+                                                             "",
+                                                         style: TextStyle(
+                                                             color: Colors.white,
+                                                             fontSize: MediaQuery.of(context).size.width * 0.03),
+                                                       ),
                                                      ),
-                                                     Text(
-                                                       controller.eventList[index].date ??
-                                                           "",
-                                                       style: TextStyle(
-                                                           color: Colors.white,
-                                                           fontSize: 16),
+                                                     Flexible(
+                                                       child: Text(
+                                                         '${controller.eventList[index].date!} ${controller.eventList[index].time!}',
+                                                         style: TextStyle(
+                                                             color: Colors.white,
+                                                             fontSize: MediaQuery.of(context).size.width * 0.03),
+                                                       ),
                                                      ),
                                                    ],
                                                  ),
                                                  SizedBox(
                                                    height: 10,
                                                  ),
-                                                 Text(
-                                                   controller.eventList[index].description ?? "",
-                                                   style: TextStyle(
-                                                       color: Colors.white,
-                                                       fontSize: 16),
+                                                 AppText(
+                                                   text: controller.eventList[index].description ?? "",
+                                                   maxlines: 2,
+                                                     textSize: MediaQuery.of(context).size.width * 0.03,
+                                                     fontWeight: FontWeight.w500
                                                  ),
                                                ],
                                              ),
@@ -187,7 +190,7 @@ class HomeView extends GetView<DashboardController> {
                            height: 20,
                          );
 
-                       },)) : Expanded(
+                       },) : Expanded(
                      child: Center(
                          child:  const Text(
                            "No Events available",

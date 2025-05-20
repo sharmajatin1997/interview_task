@@ -6,6 +6,7 @@ import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/app_helpers/app_textfields.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/authentication/validator_case/case_validator.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
@@ -32,13 +33,13 @@ class EditProfileView extends GetView<DashboardController> {
                      onTap: (){
                        Get.back();
                      },
-                       child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
+                       child: Icon(Icons.arrow_back_ios,size: Responsive.isMobile(context)? 24:30,color: Colors.white,)),
                    SizedBox(
                      width: 10,
                    ),
                    AppText(
                     text: 'Edit Profile',
-                   textSize: 14.0,
+                       textSize: MediaQuery.of(context).size.width * 0.03,
                    fontWeight: FontWeight.w500),
 
 
@@ -49,22 +50,23 @@ class EditProfileView extends GetView<DashboardController> {
                ),
                Image.asset(
                  Assets.assetsUser,
-                 height: 200,
-                 width: 200,
+                 height: Responsive.isMobile(context)?200:300,
+                 width:  Responsive.isMobile(context)?200:300,
                ),
                SizedBox(
                  height: 30,
                ),
                wrapChildren(children: [
-                 const AppText(
+                  AppText(
                    text: "Name",
-                   textSize: 14.0,
+                   textSize: MediaQuery.of(context).size.width * 0.03,
                    fontWeight: FontWeight.w500,
                  ),
                  const SizedBox(height: 10),
                  AppTextFields(
                    hintText: "e.g johndyer",
                    textLimit: 50,
+                   textSize: MediaQuery.of(context).size.width * 0.03,
                    readOnly: false,
                    validator: (String? value) => CaseValidator.validator(value!, "name"),
                    prefixIcon: Padding(
@@ -79,15 +81,16 @@ class EditProfileView extends GetView<DashboardController> {
                ]),
                const SizedBox(height: 20),
                wrapChildren(children: [
-                 const AppText(
+                  AppText(
                    text: "Email Id",
-                   textSize: 14.0,
+                   textSize: MediaQuery.of(context).size.width * 0.03,
                    fontWeight: FontWeight.w500,
                  ),
                  const SizedBox(height: 10),
                  AppTextFields(
                    hintText: "e.g johndyer@gmail.com",
                    textLimit: 50,
+                   textSize: MediaQuery.of(context).size.width * 0.03,
                    readOnly: true,
                    validator: (String? value) =>
                        CaseValidator.validator(value!, "email"),
@@ -112,8 +115,9 @@ class EditProfileView extends GetView<DashboardController> {
                    user['name']=controller.name.text;
                    controller.firebase.updateUserInfo(user);
                  },
-                 padding: const EdgeInsets.symmetric(vertical: 20),
+                 padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                  borderRadius: 10,
+                 textSize: MediaQuery.of(context).size.width * 0.03,
                  margin: const EdgeInsets.only(top: 50, bottom: 15),
                )
              ],

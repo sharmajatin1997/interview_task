@@ -9,4 +9,5 @@ abstract class Routes {
   static const profileView = "/ProfileView";
   static const editProfileView = "/EditProfileView";
   static const eventView = "/eventView";
+  static const eventDetailView = "/EventDetailView";
 }

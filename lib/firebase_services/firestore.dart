@@ -2,15 +2,18 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/helper/utils/utils.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/models/eventModel.dart';
 import 'package:interview_task/models/userModel.dart';
+import 'package:intl/intl.dart';
 
 class FirebaseFire extends GetxController {
   Rxn<UserModel> userModel = Rxn();
   RxList<EventModel> eventList = RxList();
+  RxList<EventModel> upcomingList = RxList();
   @override
   void onInit() {
     super.onInit();
@@ -56,9 +59,11 @@ class FirebaseFire extends GetxController {
 
   void saveEvent(Map<String,dynamic> data) async {
     if (await Utils.hasNetwork()) {
-      final eventId = databaseEventPath.doc(generateRandomString(15));
+      var uid=generateRandomString(15);
+      final eventId = databaseEventPath.doc(SharedPreferenceHelper().getUserId()).collection('list').doc(uid);
+      data['uid']=uid;
       await eventId.set(data);
-      Get.back(result: true);
+     Get.back(result: true);
     }
   }
 
@@ -70,18 +75,56 @@ class FirebaseFire extends GetxController {
 
   Future<List<EventModel>?> getAllEvents() async {
     if (await Utils.hasNetwork()) {
-      QuerySnapshot querySnapshot = await databaseEventPath.get();
+      QuerySnapshot querySnapshot = await databaseEventPath
+          .doc(SharedPreferenceHelper().getUserId())
+          .collection('list')
+          .get();
       final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
       List<dynamic> list = allData;
       eventList.clear();
+      upcomingList.clear();
       for (var element in list) {
         eventList.add(EventModel.fromJson(element as Map<String, dynamic>));
       }
       eventList.refresh();
-      return eventList;
+      for(var data in eventList){
+        String dateString = data.date!;
+        DateFormat format = DateFormat("dd/MM/yyyy");
+        DateTime parsedDate = format.parse(dateString);
+        DateTime combinedDateTime = combineDateAndTime(parsedDate, parseTimeOfDay(int.parse(data.hour!),int.parse(data.min!)));
+        DateTime now = DateTime.now();
+
+        if (combinedDateTime.isBefore(now)) {
+          print('The selected datetime is in the past');
+        } else if (combinedDateTime.isAfter(now)) {
+          print('The selected datetime is in the future');
+          upcomingList.add(data);
+        } else {
+          print('The selected datetime is now');
+        }
+
+      }
+      upcomingList.refresh();
+
+
+      return upcomingList;
     }else{
-      return eventList;
+      return upcomingList;
     }
+  }
+
+  DateTime combineDateAndTime(DateTime date, TimeOfDay time) {
+    return DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+  }
+
+  TimeOfDay parseTimeOfDay(int hour,int minute) {
+    return TimeOfDay(hour: hour, minute: minute);
   }
 
 }

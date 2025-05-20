@@ -6,6 +6,7 @@ import 'package:interview_task/helper/animations/staggered_list_animation.dart';
 import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
 import 'package:interview_task/routes/app_pages.dart';
@@ -44,7 +45,7 @@ class ProfileView extends GetView<DashboardController> {
                        ),
                        AppText(
                    text: 'Profile',
-                       textSize: 14.0,
+                       textSize: MediaQuery.of(context).size.width * 0.03,
                        fontWeight: FontWeight.w500),
                      ],
                    ),
@@ -55,8 +56,8 @@ class ProfileView extends GetView<DashboardController> {
                      Center(
                        child: Image.asset(
                          Assets.assetsUser,
-                         height: 200,
-                         width: 200,
+                         height: Responsive.isMobile(context)?200:300,
+                         width:  Responsive.isMobile(context)?200:300,
                        ),
                      ),
                      SizedBox(
@@ -68,14 +69,14 @@ class ProfileView extends GetView<DashboardController> {
                        children: [
                          AppText(
                              text: 'Name',
-                             textSize: 14.0,
+                             textSize: MediaQuery.of(context).size.width * 0.03,
                              fontWeight: FontWeight.w500),
                          SizedBox(
                            width: 10,
                          ),
                          AppText(
                              text: controller.model.value?.name??'',
-                             textSize: 14.0,
+                             textSize: MediaQuery.of(context).size.width * 0.03,
                              fontWeight: FontWeight.w500),
                        ],
                      ),
@@ -88,14 +89,14 @@ class ProfileView extends GetView<DashboardController> {
                        children: [
                          AppText(
                              text: 'Email',
-                             textSize: 14.0,
+                             textSize: MediaQuery.of(context).size.width * 0.03,
                              fontWeight: FontWeight.w500),
                          SizedBox(
                            width: 10,
                          ),
                          AppText(
                              text: controller.model.value?.email??'',
-                             textSize: 14.0,
+                             textSize: MediaQuery.of(context).size.width * 0.03,
                              fontWeight: FontWeight.w500),
                        ],
                      ),
@@ -105,22 +106,24 @@ class ProfileView extends GetView<DashboardController> {
                    ),
                    AppButtons(
                      text: "Edit Profile",
+                     textSize: MediaQuery.of(context).size.width * 0.03,
                      onTap: () async{
                        var res=await Get.toNamed(Routes.editProfileView);
                        if(res){
                          controller.getData(SharedPreferenceHelper().getUserId()!);
                        }
                      },
-                     padding: const EdgeInsets.symmetric(vertical: 20),
+                     padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                      borderRadius: 10,
                      margin: const EdgeInsets.only(top: 50,),
                    ),
                    AppButtons(
                      text: "Logout",
+                     textSize: MediaQuery.of(context).size.width * 0.03,
                      onTap: () async{
                        Get.find<AuthService>().logout();
                      },
-                     padding: const EdgeInsets.symmetric(vertical: 20),
+                     padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                      borderRadius: 10,
                      margin: const EdgeInsets.only(top: 20, bottom: 15),
                    ),

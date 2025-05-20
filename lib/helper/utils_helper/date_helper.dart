@@ -21,7 +21,7 @@ class DateHelper {
   static final _dateFormatRenew = DateFormat("dd MMM, yyyy");
   static final _dateFormatGoal = DateFormat("dd/MM/yyyy");
   static final _dateFormatPlan = DateFormat("MMMM yyyy");
-  static final _dateFormat = DateFormat("dd MMM, yyyy");
+  static final _dateFormat = DateFormat("dd/MM/yyyy");
   static final _eventDateForBackend = DateFormat("yyyy-MM-dd HH:mm:ss");
 
   static String getTime12Hours(DateTime? dateTime) {
