@@ -14,8 +14,8 @@ import 'package:interview_task/modules/event/controllers/event_controller.dart';
 import 'package:interview_task/modules/event/validator_case_event/event_case_validator.dart';
 import 'package:interview_task/routes/app_pages.dart';
 
-class EventView extends GetView<EventController> {
-  EventView({super.key});
+class EditEventView extends GetView<EventController> {
+  EditEventView({super.key});
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -49,7 +49,7 @@ class EventView extends GetView<EventController> {
                            SizedBox(
                              width: 10,
                            ),
-                           AppText(text: 'Add Event',
+                           AppText(text: 'Edit Event',
                                textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500),
                          ],
@@ -151,7 +151,7 @@ class EventView extends GetView<EventController> {
                        ]),
                         SizedBox(height: Responsive.isMobile(context)? 20:30),
                        AppButtons(
-                         text: "Add Event",
+                         text: "Update Event",
                          textSize: MediaQuery.of(context).size.width * 0.03,
                          onTap: () async{
                            if (formKey.currentState!.validate()) {
@@ -163,7 +163,7 @@ class EventView extends GetView<EventController> {
                                'min':controller.min.value,
                                'description':controller.description.text,
                              };
-                             controller.firebase.saveEvent(data);
+
                            }
                          },
                          padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)? 20:30),
@@ -180,18 +180,20 @@ class EventView extends GetView<EventController> {
      ),
    );
   }
-  void clearData() {
-    controller.name.clear();
-    controller.date.clear();
-    controller.time.clear();
-    controller.description.clear();
-  }
+
   Widget wrapChildren({required List<Widget> children}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: children,
     );
+  }
+
+  void clearData() {
+    controller.name.clear();
+    controller.date.clear();
+    controller.time.clear();
+    controller.description.clear();
   }
 }
 

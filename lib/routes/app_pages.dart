@@ -9,6 +9,7 @@ import 'package:interview_task/modules/dashBoard/views/home_view.dart';
 import 'package:interview_task/modules/dashBoard/views/profile_view.dart';
 import 'package:interview_task/modules/event/bindings/event_bindings.dart';
 import 'package:interview_task/modules/event/views/detail_view.dart';
+import 'package:interview_task/modules/event/views/edit_event_view.dart';
 import 'package:interview_task/modules/event/views/event_view.dart';
 
 
@@ -65,6 +66,12 @@ class AppPages {
     GetPage(
         name: Routes.eventDetailView,
         page: () =>  EventDetailView(),
+        binding: EventBinding(),
+        transition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500)),
+    GetPage(
+        name: Routes.editEventView,
+        page: () =>  EditEventView(),
         binding: EventBinding(),
         transition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500)),

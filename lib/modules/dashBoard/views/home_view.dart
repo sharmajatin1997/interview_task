@@ -115,7 +115,7 @@ class HomeView extends GetView<DashboardController> {
                                        children: [
                                          SizedBox(
                                              width: Get.width,
-                                             height: MediaQuery.sizeOf(context).height/3.5,
+                                             height: Responsive.isMobile(context)?MediaQuery.sizeOf(context).height/3.5:MediaQuery.sizeOf(context).height/3,
                                              child: ClipRRect(
                                                borderRadius:
                                                BorderRadius.circular(10),

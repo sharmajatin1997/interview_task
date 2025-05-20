@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:interview_task/firebase_services/auth_service.dart';
-import 'package:interview_task/generated/assets.dart';
 import 'package:interview_task/helper/animations/staggered_list_animation.dart';
 import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
-import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/app_helpers/image_view_chat.dart';
 import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/helper/shimmer/shimmer_box.dart';
-import 'package:interview_task/helper/utils_helper/get_storage.dart';
-import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
 import 'package:interview_task/modules/event/controllers/event_controller.dart';
 import 'package:interview_task/routes/app_pages.dart';
 
@@ -30,7 +26,7 @@ class EventDetailView extends GetView<EventController> {
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: SingleChildScrollView(
             child: Obx(
               ()=> Column(
@@ -63,22 +59,25 @@ class EventDetailView extends GetView<EventController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height:Responsive.isMobile(context)? 20:30),
                       wrapChildren(
                         children: [
                           SizedBox(
-                            width: Get.width,
-                            height: MediaQuery.sizeOf(context).height / 3.5,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                "assets/broken_image.png",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                              width: Get.width,
+                              height: Responsive.isMobile(context)?MediaQuery.sizeOf(context).height/3.5:MediaQuery.sizeOf(context).height/3,
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.circular(10),
+                                child:controller.model.value?.image!=null?
+                                ImageViewSquare(
+                                    image: controller.model.value?.image)
+                                    :Image.asset(
+                                  "assets/broken_image.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
                           SizedBox(
-                            height: 20,
+                            height: Responsive.isMobile(context)?20:30,
                           ),
                           controller.isLoadingData.value?
                           ShimmerBox(height: 20): Row(
@@ -99,7 +98,7 @@ class EventDetailView extends GetView<EventController> {
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: Responsive.isMobile(context)?10:20,
                           ),
                           controller.isLoadingData.value?
                           ShimmerBox(height: 20):Row(
@@ -120,7 +119,7 @@ class EventDetailView extends GetView<EventController> {
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: Responsive.isMobile(context)?10:20,
                           ),
                           controller.isLoadingData.value?
                           ShimmerBox(height: 20):Row(
@@ -141,14 +140,14 @@ class EventDetailView extends GetView<EventController> {
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: Responsive.isMobile(context)?10:20,
                           ),
                           AppText(
                               text: "Description",
                               textSize: MediaQuery.of(context).size.width * 0.03,
                               fontWeight: FontWeight.w500),
                           SizedBox(
-                            height: 10,
+                            height: Responsive.isMobile(context)?10:20,
                           ),
                           controller.isLoadingData.value?
                           Column(
@@ -167,6 +166,19 @@ class EventDetailView extends GetView<EventController> {
                               text: controller.model.value?.description??'',
                               textSize: MediaQuery.of(context).size.width * 0.03,
                               fontWeight: FontWeight.w500),
+                          SizedBox(
+                            height: Responsive.isMobile(context)?10:20,
+                          ),
+                          AppButtons(
+                            text: "Edit",
+                            textSize: MediaQuery.of(context).size.width * 0.03,
+                            onTap: () async{
+                              Get.toNamed(Routes.editEventView,arguments: args);
+                            },
+                            padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
+                            borderRadius: 10,
+                            margin: const EdgeInsets.only(top: 20, bottom: 15),
+                          ),
                         ],
                       ),
                     ],
