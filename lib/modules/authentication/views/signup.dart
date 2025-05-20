@@ -8,6 +8,7 @@ import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/app_helpers/app_textfields.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/modules/authentication/controllers/auth_controller.dart';
 import 'package:interview_task/modules/authentication/validator_case/case_validator.dart';
 import 'package:interview_task/routes/app_pages.dart';
@@ -33,37 +34,38 @@ class SignUpView extends GetView<AuthController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).padding.top + 20,
+                    height: Responsive.isMobile(context)? MediaQuery.of(context).padding.top + 20:MediaQuery.of(context).padding.top + 40,
                   ),
                   StaggeredListAnimation(
                       initialDelay: 100,
                       interval: 100,
                       children: [
                         wrapChildren(children: [
-                          const AppText(
+                           AppText(
                             text: "Hey there,",
-                            textSize: 15.0,
+                            textSize: MediaQuery.of(context).size.width * 0.04,
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          const AppText(
+                           AppText(
                             text: "Create an Account",
-                            textSize: 17.0,
+                            textSize: MediaQuery.of(context).size.width * 0.05,
                             fontWeight: FontWeight.w900,
                           ),
                         ]),
                         const SizedBox(height: 40),
                         wrapChildren(children: [
-                          const AppText(
+                           AppText(
                             text: "Name",
-                            textSize: 14.0,
+                            textSize: MediaQuery.of(context).size.width * 0.03,
                             fontWeight: FontWeight.w500,
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: Responsive.isMobile(context)?10:20),
                           AppTextFields(
                             hintText: "e.g johndyer",
                             textLimit: 50,
+                            textSize: MediaQuery.of(context).size.width * 0.03,
                             readOnly: false,
                             validator: (String? value) =>
                                 CaseValidator.validator(value!, "name"),
@@ -77,17 +79,18 @@ class SignUpView extends GetView<AuthController> {
                             controller: controller.nameSignup,
                           )
                         ]),
-                        const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)?20:30),
                         wrapChildren(children: [
-                          const AppText(
+                           AppText(
                             text: "Email Id",
-                            textSize: 14.0,
+                            textSize: MediaQuery.of(context).size.width * 0.03,
                             fontWeight: FontWeight.w500,
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: Responsive.isMobile(context)?10:20),
                           AppTextFields(
                             hintText: "e.g johndyer@gmail.com",
                             textLimit: 50,
+                            textSize: MediaQuery.of(context).size.width * 0.03,
                             readOnly: false,
                             validator: (String? value) =>
                                 CaseValidator.validator(value!, "email"),
@@ -101,18 +104,18 @@ class SignUpView extends GetView<AuthController> {
                             controller: controller.emailSignup,
                           )
                         ]),
-                        const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)?20:30),
                         wrapChildren(children: [
-                          const AppText(
+                           AppText(
                             text: "Password",
-                            textSize: 14.0,
+                            textSize: MediaQuery.of(context).size.width * 0.03,
                             fontWeight: FontWeight.w500,
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: Responsive.isMobile(context)?10:20),
                           Obx(
                                 () => AppTextFields(
                               hintText: "************",
-                              textLimit: 16,
+                              textLimit: 16, textSize: MediaQuery.of(context).size.width * 0.03,
                               obscureText: !controller.signupPassVisibility.value,
                               readOnly: false,
                                   validator: (String? value) =>
@@ -137,15 +140,13 @@ class SignUpView extends GetView<AuthController> {
                             ),
                           ),
                         ]),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        SizedBox(height: Responsive.isMobile(context)?15:25)
                       ]),
                   Obx(()=> controller.isLoading.value?
                   Container(
                     width: Get.width,
-                    margin: const EdgeInsets.only(top: 20, bottom: 10),
-                    height: 60,
+                    margin:  EdgeInsets.only(top:  Responsive.isMobile(context)?20:40, bottom: 10),
+                    height: Responsive.isMobile(context)?60:80,
                     decoration: BoxDecoration(
                         border:Border.all(color: Colors.transparent, width: 0.0),
                         borderRadius: BorderRadius.circular(10),
@@ -161,12 +162,13 @@ class SignUpView extends GetView<AuthController> {
                   ):
                   AppButtons(
                     text: "Signup",
+                    textSize: MediaQuery.of(context).size.width * 0.03,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         controller.signUp(context: context, email: controller.emailSignup.text, password: controller.passwordSignup.text,name:controller.nameSignup.text);
                       }
                     },
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                     borderRadius: 10,
                     margin: const EdgeInsets.only(top: 50, bottom: 15),
                   ).animate().fadeIn(delay: GetNumUtils(1.4).seconds, duration: 700.ms, curve: Curves.linearToEaseOut)),
@@ -178,9 +180,9 @@ class SignUpView extends GetView<AuthController> {
                       textAlign: TextAlign.left,
                       text: TextSpan(
                         text: 'Already have an account? ',
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontSize: 12,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
                           color: Colors.white,
                         ),
                         children: <TextSpan>[
@@ -190,8 +192,8 @@ class SignUpView extends GetView<AuthController> {
                                   Get.toNamed(Routes.login);
                                 },
                               text: 'Login',
-                              style: const TextStyle(
-                                fontSize: 12,
+                              style:  TextStyle(
+                                fontSize: MediaQuery.of(context).size.width * 0.03,
                                 color: AppColors.appColor,
                                 fontWeight: FontWeight.w400,
                               )),

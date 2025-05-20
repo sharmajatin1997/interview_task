@@ -172,7 +172,7 @@ class HomeView extends GetView<DashboardController> {
                                                    text: controller.eventList[index].description ?? "",
                                                    maxlines: 2,
                                                      textSize: MediaQuery.of(context).size.width * 0.03,
-                                                     fontWeight: FontWeight.w500
+
                                                  ),
                                                ],
                                              ),
@@ -192,9 +192,9 @@ class HomeView extends GetView<DashboardController> {
 
                        },) : Expanded(
                      child: Center(
-                         child:  const Text(
+                         child:   Text(
                            "No Events available",
-                           style: TextStyle(color: Colors.white, fontSize: 16),
+                           style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.width * 0.03,),
                          )),
                    ),
                    ),

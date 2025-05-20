@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 
 class FirebaseFire extends GetxController {
   Rxn<UserModel> userModel = Rxn();
+  Rxn<EventModel> event = Rxn();
   RxList<EventModel> eventList = RxList();
   RxList<EventModel> upcomingList = RxList();
   @override
@@ -64,6 +65,22 @@ class FirebaseFire extends GetxController {
       data['uid']=uid;
       await eventId.set(data);
      Get.back(result: true);
+    }
+  }
+
+  Future<EventModel?> getEventById(uid) async {
+    if (await Utils.hasNetwork()) {
+      var response = await databaseEventPath.doc(SharedPreferenceHelper().getUserId()).collection('list').doc(uid).get();
+      final data = response.data();
+      if (data != null) {
+        event.value = EventModel.fromJson(data);
+        event.refresh();
+        return EventModel.fromJson(data);
+      }else{
+        return EventModel();
+      }
+    }else{
+      return EventModel();
     }
   }
 

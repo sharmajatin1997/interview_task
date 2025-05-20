@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:interview_task/firebase_services/auth_service.dart';
 import 'package:interview_task/firebase_services/firestore.dart';
 import 'package:interview_task/helper/utils_helper/date_helper.dart';
+import 'package:interview_task/models/eventModel.dart';
 import 'package:interview_task/models/userModel.dart';
 
 class EventController extends GetxController {
@@ -46,7 +47,21 @@ class EventController extends GetxController {
         time.text=formatTime(selectedTime!);
     }
   }
-
+  var isLoadingData = false.obs;
+  Rxn<EventModel> model=Rxn();
+  Future getData(String uid)async{
+    isLoadingData.value=true;
+    var res=await firebase.getEventById(uid);
+    if(res?.uid!=null){
+      model.value=res!;
+      model.refresh();
+      name.text=model.value?.name??'';
+      date.text=model.value?.date??'';
+      time.text=model.value?.time??'';
+      description.text=model.value?.description??'';
+    }
+    isLoadingData.value=false;
+  }
   String formatTime(TimeOfDay time) {
     final now = DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);

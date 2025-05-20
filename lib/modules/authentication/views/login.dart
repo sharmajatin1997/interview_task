@@ -8,7 +8,9 @@ import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/app_helpers/app_textfields.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/modules/authentication/controllers/auth_controller.dart';
+import 'package:interview_task/modules/authentication/validator_case/case_validator.dart';
 import 'package:interview_task/routes/app_pages.dart';
 
 class LoginView extends GetView<AuthController> {
@@ -35,37 +37,40 @@ class LoginView extends GetView<AuthController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).padding.top + 20,
+                        height: Responsive.isMobile(context)? MediaQuery.of(context).padding.top + 20:MediaQuery.of(context).padding.top + 40,
                       ),
                       StaggeredListAnimation(
                           initialDelay: 100,
                           interval: 100,
                           children: [
                             wrapChildren(children: [
-                              const AppText(
+                               AppText(
                                 text: "Hey there,",
-                                textSize: 15.0,
+                                textSize: MediaQuery.of(context).size.width * 0.04,
                               ),
                               const SizedBox(
                                 height: 15,
                               ),
-                              const AppText(
+                               AppText(
                                 text: "Welcome Back!",
-                                textSize: 17.0,
+                                textSize: MediaQuery.of(context).size.width * 0.05,
                                 fontWeight: FontWeight.w900,
                               ),
                             ]),
                             const SizedBox(height: 40),
                             wrapChildren(children: [
-                              const AppText(
+                               AppText(
                                 text: "Email Id",
-                                textSize: 14.0,
+                                textSize: MediaQuery.of(context).size.width * 0.03,
                                 fontWeight: FontWeight.w500,
                               ),
-                              const SizedBox(height: 10),
+                               SizedBox(height: Responsive.isMobile(context)?10:20),
                               AppTextFields(
                                 hintText: "e.g johndyer@gmail.com",
                                 textLimit: 50,
+                                textSize: MediaQuery.of(context).size.width * 0.03,
+                                validator: (String? value) =>
+                                    CaseValidator.validator(value!, "email"),
                                 readOnly: false,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.all(19.0),
@@ -77,20 +82,23 @@ class LoginView extends GetView<AuthController> {
                                 controller: controller.email,
                               )
                             ]),
-                            const SizedBox(height: 20),
+                            SizedBox(height: Responsive.isMobile(context)?20:30),
                             wrapChildren(children: [
-                              const AppText(
+                               AppText(
                                 text: "Password",
-                                textSize: 14.0,
+                                textSize: MediaQuery.of(context).size.width * 0.03,
                                 fontWeight: FontWeight.w500,
                               ),
-                              const SizedBox(height: 10),
+                              SizedBox(height: Responsive.isMobile(context)?10:20),
                               Obx(
                                     () => AppTextFields(
                                   hintText: "************",
                                   textLimit: 16,
+                                  textSize: MediaQuery.of(context).size.width * 0.03,
                                   obscureText: !controller.loginPassVisibility.value,
                                   readOnly: false,
+                                      validator: (String? value) =>
+                                          CaseValidator.validator(value!, "password"),
                                   prefixIcon: Padding(
                                     padding: const EdgeInsets.all(19.0),
                                     child: Image.asset(
@@ -111,15 +119,13 @@ class LoginView extends GetView<AuthController> {
                                 ),
                               ),
                             ]),
-                            const SizedBox(
-                              height: 15,
-                            ),
+                            SizedBox(height: Responsive.isMobile(context)?15:50),
                           ]),
                       Obx(()=> controller.isLoadingLogin.value?
                       Container(
                         width: Get.width,
-                        margin: const EdgeInsets.only(top: 50, bottom: 15),
-                        height: 60,
+                        margin:  EdgeInsets.only(top: Responsive.isMobile(context)?50:80, bottom: 15),
+                        height: Responsive.isMobile(context)?60:80,
                         decoration: BoxDecoration(
                             border:Border.all(color: Colors.transparent, width: 0.0),
                             borderRadius: BorderRadius.circular(10),
@@ -135,6 +141,7 @@ class LoginView extends GetView<AuthController> {
                       ):
                       AppButtons(
                         text: "Login",
+                        textSize: MediaQuery.of(context).size.width * 0.03,
                         onTap: () {
                           if (formKey.currentState!.validate()) {
                             controller.login(
@@ -143,7 +150,7 @@ class LoginView extends GetView<AuthController> {
                                 password1: controller.password.text);
                           }
                         },
-                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                         borderRadius: 10,
                         margin: const EdgeInsets.only(top: 50, bottom: 15),
                       ).animate().fadeIn(delay: GetNumUtils(1.4).seconds, duration: 700.ms, curve: Curves.linearToEaseOut)),
@@ -155,9 +162,9 @@ class LoginView extends GetView<AuthController> {
                           textAlign: TextAlign.left,
                           text: TextSpan(
                             text: 'Don’t have an account? ',
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontSize: 12,
+                              fontSize: MediaQuery.of(context).size.width * 0.03,
                               color: Colors.white,
                             ),
                             children: <TextSpan>[
@@ -167,8 +174,8 @@ class LoginView extends GetView<AuthController> {
                                       Get.toNamed(Routes.signup);
                                     },
                                   text: 'Sign up',
-                                  style: const TextStyle(
-                                    fontSize: 12,
+                                  style:  TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.03,
                                     color: AppColors.appColor,
                                     fontWeight: FontWeight.w400,
                                   )),

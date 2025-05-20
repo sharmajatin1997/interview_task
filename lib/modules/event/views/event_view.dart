@@ -7,6 +7,7 @@ import 'package:interview_task/helper/app_helpers/app_buttons.dart';
 import 'package:interview_task/helper/app_helpers/app_text.dart';
 import 'package:interview_task/helper/app_helpers/app_textfields.dart';
 import 'package:interview_task/helper/colors/app_colors.dart';
+import 'package:interview_task/helper/responsive.dart';
 import 'package:interview_task/helper/utils_helper/get_storage.dart';
 import 'package:interview_task/modules/dashBoard/controllers/dashboard_controller.dart';
 import 'package:interview_task/modules/event/controllers/event_controller.dart';
@@ -43,27 +44,28 @@ class EventView extends GetView<EventController> {
                              onTap: (){
                                Get.back(result: true);
                              },
-                               child: Icon(Icons.arrow_back_ios,size: 24,color: Colors.white,)),
+                               child: Icon(Icons.arrow_back_ios,size: Responsive.isMobile(context)? 24:30,color: Colors.white,)),
                            SizedBox(
                              width: 10,
                            ),
                            AppText(text: 'Add Event',
-                           textSize: 14.0,
+                               textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500),
                          ],
                        ),
                        SizedBox(
-                         height: 20,
+                         height: Responsive.isMobile(context)? 20:30,
                        ),
                        wrapChildren(children: [
-                         const AppText(
+                          AppText(
                            text: "Event Name",
-                           textSize: 14.0,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500,
                          ),
-                         const SizedBox(height: 10),
+                          SizedBox(height: Responsive.isMobile(context)? 10:20),
                          AppTextFields(
                            hintText: "e.g johndyer",
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            textLimit: 50,
                            readOnly: false,
                            validator: (String? value) => EventCaseValidator.validatorEvent(value!, "name"),
@@ -77,20 +79,21 @@ class EventView extends GetView<EventController> {
                            controller: controller.name,
                          )
                        ]),
-                       const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)? 20:30),
                        wrapChildren(children: [
-                         const AppText(
+                          AppText(
                            text: "Event Date",
-                           textSize: 14.0,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500,
                          ),
-                         const SizedBox(height: 10),
+                          SizedBox(height:Responsive.isMobile(context)? 10:20),
                          AppTextFields(
                            onTap: (){
                              controller.selectDate(context);
                            },
                            hintText: "e.g dd/mm/yyyy",
                            textLimit: 50,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            readOnly: true,
                            validator: (String? value) =>
                                EventCaseValidator.validatorEvent(value!, "date"),
@@ -101,20 +104,21 @@ class EventView extends GetView<EventController> {
                            controller: controller.date,
                          )
                        ]),
-                       const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)? 20:30),
                        wrapChildren(children: [
-                         const AppText(
+                          AppText(
                            text: "Event Date",
-                           textSize: 14.0,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500,
                          ),
-                         const SizedBox(height: 10),
+                          SizedBox(height: Responsive.isMobile(context)? 10:20),
                          AppTextFields(
                            hintText: "e.g hh:mm",
                            onTap: (){
                              controller.selectTime(context);
                            },
                            textLimit: 50,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            readOnly: true,
                            validator: (String? value) =>
                                EventCaseValidator.validatorEvent(value!, "time"),
@@ -125,27 +129,29 @@ class EventView extends GetView<EventController> {
                            controller: controller.time,
                          )
                        ]),
-                       const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)? 20:30),
                        wrapChildren(children: [
-                         const AppText(
+                          AppText(
                            text: "Event Description",
-                           textSize: 14.0,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            fontWeight: FontWeight.w500,
                          ),
-                         const SizedBox(height: 10),
+                          SizedBox(height:Responsive.isMobile(context)?  10:20),
                          AppTextFields(
                            hintText: "e.g event party",
                            textLimit: 200,
                            readOnly: false,
                            maxLines: 4,
+                           textSize: MediaQuery.of(context).size.width * 0.03,
                            validator: (String? value) =>
                                EventCaseValidator.validatorEvent(value!, "description"),
                            controller: controller.description,
                          )
                        ]),
-                       const SizedBox(height: 20),
+                        SizedBox(height: Responsive.isMobile(context)? 20:30),
                        AppButtons(
                          text: "Add Event",
+                         textSize: MediaQuery.of(context).size.width * 0.03,
                          onTap: () async{
                            if (formKey.currentState!.validate()) {
                              var data={
@@ -159,7 +165,7 @@ class EventView extends GetView<EventController> {
                              controller.firebase.saveEvent(data);
                            }
                          },
-                         padding: const EdgeInsets.symmetric(vertical: 20),
+                         padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)? 20:30),
                          borderRadius: 10,
                          margin: const EdgeInsets.only(top: 50, bottom: 15),
                        ),
