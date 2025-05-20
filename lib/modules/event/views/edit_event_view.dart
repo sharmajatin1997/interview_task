@@ -168,6 +168,7 @@ class EditEventView extends GetView<EventController> {
                                'hour':controller.hour.value,
                                'min':controller.min.value,
                                'description':controller.description.text,
+                               'image':'https://media.istockphoto.com/id/1080309288/photo/happy-friends-jumping-in-pool-on-the-vacations.jpg?s=612x612&w=0&k=20&c=os6WjrG8ME0DUTjmQ5tPR5lkopMOARNfbh5JGmQ_GMQ=',
                                'uid':args['uid']
                              };
                              controller.firebase.updateEventInfo(data);

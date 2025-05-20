@@ -8,4 +8,5 @@ class Assets {
   static const String assetsIcPassword = 'assets/ic_password.png';
   static const String assetsIcInfo = 'assets/ic_info.png';
   static const String assetsUser = 'assets/user.png';
+  static const String assetsNoData = 'assets/no_data.png';
 }

@@ -19,7 +19,7 @@ class HomeView extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     controller.getData(SharedPreferenceHelper().getUserId()!);
     controller.getEventList();
-   return SafeArea(
+    return SafeArea(
      child: Scaffold(
        backgroundColor: Colors.black,
        body:Padding(
@@ -87,7 +87,8 @@ class HomeView extends GetView<DashboardController> {
                              )
                            ],
                          );
-                       }) :controller.eventList.isNotEmpty ? ListView.separated(
+                       }) :
+                 controller.eventList.isNotEmpty ? ListView.separated(
                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                          shrinkWrap: true,
                          physics: const ClampingScrollPhysics(),
@@ -160,7 +161,7 @@ class HomeView extends GetView<DashboardController> {
                                                      ),
                                                      Flexible(
                                                        child: Text(
-                                                         '${controller.eventList[index].date!} ${controller.eventList[index].time!}',
+                                                         '${controller.eventList[index].date!} at ${controller.eventList[index].time!}',
                                                          style: TextStyle(
                                                              color: Colors.white,
                                                              fontSize: MediaQuery.of(context).size.width * 0.03),
@@ -193,14 +194,21 @@ class HomeView extends GetView<DashboardController> {
                            height: 20,
                          );
 
-                       },) : Expanded(
-                     child: Center(
-                         child:   Text(
-                           "No Events available",
-                           style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.width * 0.03,),
-                         )),
-                   ),
-                   ),
+                       },) : Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   crossAxisAlignment: CrossAxisAlignment.center,
+                   children: [
+                     SizedBox(
+                       height: Responsive.isMobile(context)?MediaQuery.sizeOf(context).height/4:MediaQuery.sizeOf(context).height/3.5 ,
+                     ),
+                     Image.asset(Assets.assetsNoData,height: 200,width: 200,),
+                     Center(
+                               child:   Text(
+                                 "No Events available",
+                                 style: TextStyle(color: Colors.white, fontSize: MediaQuery.of(context).size.width * 0.03,),
+                               )),
+                   ],
+                 )),
                ],
              ),
            ],
@@ -221,7 +229,6 @@ class HomeView extends GetView<DashboardController> {
      ),
    );
   }
-
 
   Widget wrapChildren({required List<Widget> children}) {
     return Column(

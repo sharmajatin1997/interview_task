@@ -6,7 +6,6 @@ import 'package:interview_task/models/eventModel.dart';
 import 'package:interview_task/models/userModel.dart';
 
 
-
 class DashboardController extends GetxController {
 
   final auth = Get.find<AuthService>();
@@ -35,9 +34,9 @@ class DashboardController extends GetxController {
     if(res!.isNotEmpty){
       isLoading.value=false;
       eventList.value=res!;
+    }else{
+      isLoading.value=false;
     }
   }
 
-
-
-  }
+}
