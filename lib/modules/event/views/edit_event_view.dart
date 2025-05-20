@@ -17,9 +17,15 @@ import 'package:interview_task/routes/app_pages.dart';
 class EditEventView extends GetView<EventController> {
   EditEventView({super.key});
   final formKey = GlobalKey<FormState>();
+  late Map<String, dynamic> args;
 
   @override
   Widget build(BuildContext context) {
+    if (Get.arguments != null) {
+      args = Get.arguments;
+    } else {
+      args = {};
+    }
    return SafeArea(
      child: Scaffold(
        backgroundColor: Colors.black,
@@ -162,8 +168,9 @@ class EditEventView extends GetView<EventController> {
                                'hour':controller.hour.value,
                                'min':controller.min.value,
                                'description':controller.description.text,
+                               'uid':args['uid']
                              };
-
+                             controller.firebase.updateEventInfo(data);
                            }
                          },
                          padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)? 20:30),

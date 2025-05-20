@@ -49,6 +49,7 @@ class EventController extends GetxController {
   }
   var isLoadingData = false.obs;
   Rxn<EventModel> model=Rxn();
+
   Future getData(String uid)async{
     isLoadingData.value=true;
     var res=await firebase.getEventById(uid);
@@ -59,6 +60,8 @@ class EventController extends GetxController {
       date.text=model.value?.date??'';
       time.text=model.value?.time??'';
       description.text=model.value?.description??'';
+      hour.value=model.value?.hour??'';
+      min.value=model.value?.min??'';
     }
     isLoadingData.value=false;
   }

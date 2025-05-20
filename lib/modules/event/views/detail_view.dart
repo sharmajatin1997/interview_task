@@ -173,7 +173,10 @@ class EventDetailView extends GetView<EventController> {
                             text: "Edit",
                             textSize: MediaQuery.of(context).size.width * 0.03,
                             onTap: () async{
-                              Get.toNamed(Routes.editEventView,arguments: args);
+                              var res =await Get.toNamed(Routes.editEventView,arguments: args);
+                              if(res){
+                                controller.getData(args['uid']);
+                              }
                             },
                             padding:  EdgeInsets.symmetric(vertical: Responsive.isMobile(context)?20:30),
                             borderRadius: 10,

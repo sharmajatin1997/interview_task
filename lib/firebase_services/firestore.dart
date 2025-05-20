@@ -15,10 +15,6 @@ class FirebaseFire extends GetxController {
   Rxn<EventModel> event = Rxn();
   RxList<EventModel> eventList = RxList();
   RxList<EventModel> upcomingList = RxList();
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   final databaseUserPath = FirebaseFirestore.instance.collection('users');
   final databaseEventPath = FirebaseFirestore.instance.collection('events');
@@ -39,7 +35,6 @@ class FirebaseFire extends GetxController {
     }
   }
 
-
   Future<UserModel?> getUserById(uid) async {
     if (await Utils.hasNetwork()) {
       var response = await databaseUserPath.doc(uid).get();
@@ -56,7 +51,6 @@ class FirebaseFire extends GetxController {
       return UserModel();
     }
   }
-
 
   void saveEvent(Map<String,dynamic> data) async {
     if (await Utils.hasNetwork()) {
@@ -127,6 +121,14 @@ class FirebaseFire extends GetxController {
       return upcomingList;
     }else{
       return upcomingList;
+    }
+  }
+
+  void updateEventInfo(Map<String, dynamic> model) async {
+    if (await Utils.hasNetwork()) {
+      final event = databaseEventPath.doc(SharedPreferenceHelper().getUserId()).collection('list').doc(model["uid"]);
+      await event.update(model);
+      Get.back(result: true);
     }
   }
 
