@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:interview_task/helper/utils/utils.dart';
@@ -104,12 +105,18 @@ class FirebaseFire extends GetxController {
         DateTime now = DateTime.now();
 
         if (combinedDateTime.isBefore(now)) {
-          print('The selected datetime is in the past');
+          if (kDebugMode) {
+            print('The selected datetime is in the past');
+          }
         } else if (combinedDateTime.isAfter(now)) {
-          print('The selected datetime is in the future');
+          if (kDebugMode) {
+            print('The selected datetime is in the future');
+          }
           upcomingList.add(data);
         } else {
-          print('The selected datetime is now');
+          if (kDebugMode) {
+            print('The selected datetime is now');
+          }
         }
 
       }
