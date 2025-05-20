@@ -43,7 +43,7 @@ class EventDetailView extends GetView<EventController> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.back();
+                              Get.back(result: true);
                             },
                             child: Icon(
                               Icons.arrow_back_ios,

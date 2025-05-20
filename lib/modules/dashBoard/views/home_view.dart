@@ -100,8 +100,11 @@ class HomeView extends GetView<DashboardController> {
                                verticalOffset: 50.0,
                                child: FadeInAnimation(
                                  child: InkWell(
-                                   onTap: () {
-                                      Get.toNamed(Routes.eventDetailView,arguments:controller.eventList[index].toJson());
+                                   onTap: ()async {
+                                      var res= await Get.toNamed(Routes.eventDetailView,arguments:controller.eventList[index].toJson());
+                                      if(res){
+                                        controller.getEventList();
+                                      }
                                    },
                                    child: Container(
                                      decoration: BoxDecoration(
